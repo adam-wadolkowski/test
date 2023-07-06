@@ -37,6 +37,15 @@ class Contest
 
     public function usersByDate(\DateTime $month, string $userId): array
     {
-        return [[]];
+        $sumPoints = 0;
+        foreach($this->contests as $key => $contest) {
+            if ($contest[0] === $userId && $contest[1]->format('Y-m') === $month->format('Y-m')) {
+                $sumPoints += $contest[2];
+            }
+        }
+        return [[$userId, $sumPoints]];
     }
 }
+
+$contest = new Contest();
+var_dump($contest->usersByDate(new \DateTime('2023-01'), 'user_1'));
