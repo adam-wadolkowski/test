@@ -32,7 +32,8 @@ class Contest
             ['user_3', new \DateTime('2023-01-04'), 6],
             ['user_1', new \DateTime('2023-02-05'), 7],
             ['user_3', new \DateTime('2023-02-06'), 8],
-            ['user_1', new \DateTime('2023-02-07'), 8]]);
+            ['user_1', new \DateTime('2023-02-07'), 8],
+        ]);
     }
 
     public function getUserMaxPointByUserIdAndMonth(\DateTime $month, string $userId): array
@@ -48,27 +49,29 @@ class Contest
 
     public function getUsersMaxPointsByMonth(\DateTime $month): array
     {
-        $usersMaxPoints = [];
+        $usersSumPoints = [];
         foreach($this->contests as $key => $contest) {
             if ($contest[1]->format('Y-m') === $month->format('Y-m')) {
-                @$usersMaxPoints[$contest[0]] += $contest[2];
+                @$usersSumPoints[$contest[0]] += $contest[2];
             }
         }
 
-        arsort($usersMaxPoints);
+        arsort($usersSumPoints);
 
-        $tmp = [];
-        $maxPoint = reset($usersMaxPoints);
-        foreach($usersMaxPoints as $key => $userMaxPoint) {
+        $usersMaxPoints = [];
+        $maxPoint = reset($usersSumPoints);
+        foreach($usersSumPoints as $key => $userMaxPoint) {
             if ($userMaxPoint === $maxPoint) {
-                $tmp[] = [$key, $month, $userMaxPoint];
+                $usersMaxPoints[] = [$key, $month, $userMaxPoint];
             }
         }
 
-        return $tmp;
+        return $usersMaxPoints;
     }
 }
 
 $contest = new Contest();
 var_dump($contest->getUserMaxPointByUserIdAndMonth(new \DateTime('2023-01'), 'user_1'));
 var_dump($contest->getUsersMaxPointsByMonth(new \DateTime('2023-01')));
+var_dump($contest->getUsersMaxPointsByMonth(new \DateTime('2023-02')));
+
