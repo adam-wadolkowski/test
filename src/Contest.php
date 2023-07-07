@@ -44,7 +44,7 @@ class Contest
                 $userSumPoints += $contest[2];
             }
         }
-        return [[$userId, $month,  $userSumPoints]];
+        return [$userId, $month,  $userSumPoints];
     }
 
     public function getUsersMaxPointsByMonth(\DateTime $month): array
@@ -69,8 +69,3 @@ class Contest
         return $usersMaxPoints;
     }
 }
-
-$contest = new Contest();
-var_dump($contest->getUserMaxPointByUserIdAndMonth(new \DateTime('2023-01'), 'user_1'));
-var_dump($contest->getUsersMaxPointsByMonth(new \DateTime('2023-01')));
-var_dump($contest->getUsersMaxPointsByMonth(new \DateTime('2023-02')));
